@@ -10,10 +10,10 @@ def LoadFile(filedir):
 	df = dataframe
 	ftype = 's' or 'b'
 	"""
-def ProcessFrame(df, ftype):
-	df = df[df.Label == ftype]
-	df.drop(df.columns[[0, -2, -1]], axis=1, inplace=True)
-	return df
+def ProcessFrame(df, feature=None, result=None):
+	if result is not None and feature is not None:
+		df = df[feature == result]	
+	return df.drop(df.columns[[0, -2, -1]], axis=1)
 
 def GetVariables(df):
 	return list(df.columns.values)
