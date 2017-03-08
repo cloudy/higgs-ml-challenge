@@ -1,35 +1,42 @@
 #!/usr/bin/env python2
 import ProcessFile as pf
-#import PlotData as pld
+import PlotData as pld
 
-from sklearn.linear_model import SGDClassifier
-from sklearn import linear_model, svm
-
-
+# Loading and cleaning data
 
 filename = "/data/higgsml/training.csv"
 
-print filename
-
 dataframe = pf.LoadFile(filename)
 
-#print dataframe
+dataframe = pf.ReplaceValues(dataframe)
 
-datasignal = pf.ProcessFrame(dataframe, dataframe.Label, 's')
+train_df, test_df = pf.SplitData(dataframe)
 
-#print datasignal
+print len(train_df), len(test_df)
 
-databack = pf.ProcessFrame(dataframe, dataframe.Label, 'b')
+xtrain = pf.ProcessFrame(train_df, train_df.Label, 1)
+ytrain = train_df.Label
 
-#print databack
 
-print pf.GetVariables(dataframe)[2]
+print ytrain
 
-datacleaned = pf.ProcessFrame(dataframe)
 
-print datacleaned
+datasignal = pf.ProcessFrame(dataframe, dataframe.Label, 1)
+databack = pf.ProcessFrame(dataframe, dataframe.Label, 0)
 
-print "original: ", dataframe.shape
-print "cleaned : ", datacleaned.shape
-print "signal d: ", datasignal.shape
-print "backgr d: ", databack.shape
+# Generating/saving plots
+
+figs = [pld.PlotData([datasignal, databack], var) for var in pf.GetVariables(datasignal)]
+pld.SavePlots(figs)
+pld.ClosePlots(figs)
+
+# Training
+
+
+
+# Testing model
+
+
+
+# Saving model
+
