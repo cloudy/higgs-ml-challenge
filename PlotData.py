@@ -1,4 +1,6 @@
 #!/usr/bin/env python2
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt 
 from matplotlib.backends.backend_pdf import PdfPages
 plt.rcParams.update({'figure.max_open_warning': 0})
